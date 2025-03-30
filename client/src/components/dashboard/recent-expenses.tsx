@@ -24,6 +24,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
+import { useAuth } from "@/hooks/use-auth";
 import EditExpenseDialog from "@/components/expense/edit-expense-dialog";
 import {
   AlertDialog,
@@ -37,6 +38,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Search } from "lucide-react";
+import { formatCurrency } from "@/lib/currency-formatter";
 
 // Map of category to icon color class
 const categoryIconColors: Record<string, string> = {
@@ -122,6 +124,7 @@ export default function RecentExpenses({
   const [editingExpense, setEditingExpense] = useState<Expense | null>(null);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
   const { toast } = useToast();
+  const { user } = useAuth();
   
   const pageSize = 5;
   
@@ -288,7 +291,7 @@ export default function RecentExpenses({
                         </span>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                        ${expense.amount.toFixed(2)}
+                        {formatCurrency(expense.amount, user?.currency || 'XAF')}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                         <Button

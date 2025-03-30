@@ -16,8 +16,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
+import { useAuth } from "@/hooks/use-auth";
 import { format } from "date-fns";
 import { Loader2, Save } from "lucide-react";
+import { currencySymbols } from "@/lib/currency-formatter";
 
 interface EditExpenseDialogProps {
   expense: Expense;
@@ -31,6 +33,8 @@ export default function EditExpenseDialog({
   onClose 
 }: EditExpenseDialogProps) {
   const { toast } = useToast();
+  const { user } = useAuth();
+  const currencySymbol = user?.currency ? currencySymbols[user.currency] : 'FCFA';
   
   const form = useForm<InsertExpense>({
     resolver: zodResolver(clientExpenseSchema),
@@ -112,7 +116,7 @@ export default function EditExpenseDialog({
                     <FormControl>
                       <div className="relative">
                         <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                          <span className="text-gray-500 sm:text-sm">$</span>
+                          <span className="text-gray-500 sm:text-sm">{currencySymbol}</span>
                         </div>
                         <Input
                           type="number"

@@ -66,7 +66,7 @@ export class MemStorage implements IStorage {
       
       await this.createExpense({
         userId: 1,
-        amount: 25.99,
+        amount: 12500,
         description: 'Groceries',
         date: new Date(date.setDate(date.getDate() - 1)),
         category: 'Food',
@@ -76,7 +76,7 @@ export class MemStorage implements IStorage {
       
       await this.createExpense({
         userId: 1,
-        amount: 45.50,
+        amount: 22000,
         description: 'Gas',
         date: new Date(date.setDate(date.getDate() - 3)),
         category: 'Transportation',
@@ -86,7 +86,7 @@ export class MemStorage implements IStorage {
       
       await this.createExpense({
         userId: 1,
-        amount: 12.99,
+        amount: 6500,
         description: 'Netflix subscription',
         date: new Date(date.setDate(date.getDate() - 5)),
         category: 'Entertainment',
@@ -127,7 +127,7 @@ export class MemStorage implements IStorage {
     const user: User = { 
       ...insertUser, 
       id,
-      currency: 'USD',
+      currency: 'XAF',
       role
     };
     
@@ -157,7 +157,7 @@ export class MemStorage implements IStorage {
     
     const updatedUser = {
       ...user,
-      currency: settings.currency || user.currency || 'USD'
+      currency: settings.currency || user.currency || 'XAF'
     };
     
     this.users.set(userId, updatedUser);

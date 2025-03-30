@@ -4,6 +4,8 @@ import { ArrowUpDown, DollarSign, PieChart, Clock, TrendingDown, TrendingUp } fr
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useAuth } from "@/hooks/use-auth";
+import { formatCurrency } from "@/lib/currency-formatter";
 
 interface StatCardsProps {
   totalExpenses: number;
@@ -18,6 +20,7 @@ export default function StatCards({
   highestCategory,
   recentEntriesCount
 }: StatCardsProps) {
+  const { user } = useAuth();
   return (
     <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
       <Card className="overflow-hidden border-blue-100 hover:shadow-md transition-all">
@@ -33,7 +36,7 @@ export default function StatCards({
                 </dt>
                 <dd>
                   <div className="text-xl font-bold text-gray-900">
-                    ${totalExpenses.toFixed(2)}
+                    {formatCurrency(totalExpenses, user?.currency || 'XAF')}
                   </div>
                 </dd>
               </dl>

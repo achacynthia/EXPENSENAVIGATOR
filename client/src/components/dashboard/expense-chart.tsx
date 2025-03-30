@@ -12,6 +12,8 @@ import {
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { format, subMonths, compareAsc } from 'date-fns';
 import { Expense } from "@shared/schema";
+import { useAuth } from "@/hooks/use-auth";
+import { formatCurrency } from "@/lib/currency-formatter";
 
 interface ExpenseChartProps {
   expenses: Expense[];
@@ -26,6 +28,7 @@ export default function ExpenseChart({ expenses }: ExpenseChartProps) {
   // Get data for the last 6 months
   const today = new Date();
   const sixMonthsAgo = subMonths(today, 6);
+  const { user } = useAuth();
   
   const filteredExpenses = expenses.filter(expense => {
     const expenseDate = new Date(expense.date);
@@ -120,7 +123,7 @@ export default function ExpenseChart({ expenses }: ExpenseChartProps) {
               <XAxis dataKey="month" />
               <YAxis />
               <Tooltip 
-                formatter={(value: number) => [`$${value.toFixed(2)}`, 'Amount']} 
+                formatter={(value: number) => [formatCurrency(value, user?.currency || 'XAF'), 'Amount']} 
               />
               <Legend />
               {categories.map((category) => (

@@ -16,7 +16,7 @@ import { useState } from "react";
 export default function SettingsPage() {
   const { user, logoutMutation } = useAuth();
   const { toast } = useToast();
-  const [currency, setCurrency] = useState(user?.currency || "USD");
+  const [currency, setCurrency] = useState(user?.currency || "XAF");
   
   // Currency update mutation
   const updateCurrencyMutation = useMutation({
@@ -139,6 +139,7 @@ export default function SettingsPage() {
                             <SelectValue placeholder="Select a currency" />
                           </SelectTrigger>
                           <SelectContent>
+                            <SelectItem value="XAF">XAF - CFA Franc (FCFA)</SelectItem>
                             <SelectItem value="USD">USD - US Dollar ($)</SelectItem>
                             <SelectItem value="EUR">EUR - Euro (€)</SelectItem>
                             <SelectItem value="GBP">GBP - British Pound (£)</SelectItem>
