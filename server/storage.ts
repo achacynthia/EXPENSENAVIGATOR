@@ -56,7 +56,7 @@ export class MemStorage implements IStorage {
     if (!demoUser) {
       await this.createUser({
         username: 'demo',
-        password: '6cf1f43a5e7c4ee6713d73af337877fe88248bc30ecb1abf7c7ca856bff007a8912fc93598e77ec3713592505f7eae6347942d2f95fa6bb25596ebcbff31c0a7.68997d0798d5677a', // 'password'
+        password: 'b60287264acd6c301166a63a231983be7b1c50472d531f739418b9f98a0ead1fd7fb8e3c10a39b716d735e1d4e42c784796faf9efc594469683566841d44bd53.e3ecf42fb63c9aa37f8a3556ad42f42a', // 'password'
         name: 'Demo User',
         email: 'demo@example.com'
       });
@@ -100,7 +100,7 @@ export class MemStorage implements IStorage {
     if (!adminUser) {
       await this.createUser({
         username: 'admin',
-        password: '6cf1f43a5e7c4ee6713d73af337877fe88248bc30ecb1abf7c7ca856bff007a8912fc93598e77ec3713592505f7eae6347942d2f95fa6bb25596ebcbff31c0a7.68997d0798d5677a', // 'password'
+        password: 'b60287264acd6c301166a63a231983be7b1c50472d531f739418b9f98a0ead1fd7fb8e3c10a39b716d735e1d4e42c784796faf9efc594469683566841d44bd53.e3ecf42fb63c9aa37f8a3556ad42f42a', // 'password'
         name: 'Admin User',
         email: 'admin@example.com'
       });
