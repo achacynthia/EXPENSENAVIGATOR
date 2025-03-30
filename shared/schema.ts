@@ -8,6 +8,8 @@ export const users = pgTable("users", {
   password: text("password").notNull(),
   name: text("name").notNull(),
   email: text("email").notNull().unique(),
+  currency: text("currency").default('USD'),
+  role: text("role").default('user'),
 });
 
 export const categories = pgTable("categories", {
