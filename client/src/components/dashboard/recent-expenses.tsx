@@ -40,28 +40,28 @@ import {
 import { Search } from "lucide-react";
 import { formatCurrency } from "@/lib/currency-formatter";
 
-// Map of category to icon color class
+// Map of category to icon color class (black and white only)
 const categoryIconColors: Record<string, string> = {
-  Groceries: "bg-blue-100 text-blue-600",
-  Utilities: "bg-green-100 text-green-600",
-  Entertainment: "bg-purple-100 text-purple-600",
-  Housing: "bg-yellow-100 text-yellow-600",
-  Shopping: "bg-red-100 text-red-600",
-  Health: "bg-indigo-100 text-indigo-600",
-  Transportation: "bg-orange-100 text-orange-600",
-  Other: "bg-gray-100 text-gray-600"
+  Groceries: "bg-gray-100 text-gray-600",
+  Utilities: "bg-gray-200 text-gray-700",
+  Entertainment: "bg-gray-100 text-gray-600",
+  Housing: "bg-gray-200 text-gray-700",
+  Shopping: "bg-gray-100 text-gray-600",
+  Health: "bg-gray-200 text-gray-700",
+  Transportation: "bg-gray-100 text-gray-600",
+  Other: "bg-gray-200 text-gray-700"
 };
 
-// Map of category to badge color class
+// Map of category to badge color class (black and white only)
 const categoryBadgeColors: Record<string, string> = {
-  Groceries: "bg-blue-100 text-blue-800",
-  Utilities: "bg-green-100 text-green-800",
-  Entertainment: "bg-purple-100 text-purple-800",
-  Housing: "bg-yellow-100 text-yellow-800",
-  Shopping: "bg-red-100 text-red-800",
-  Health: "bg-indigo-100 text-indigo-800",
-  Transportation: "bg-orange-100 text-orange-800",
-  Other: "bg-gray-100 text-gray-800"
+  Groceries: "bg-gray-100 text-gray-800",
+  Utilities: "bg-gray-200 text-gray-900",
+  Entertainment: "bg-gray-100 text-gray-800",
+  Housing: "bg-gray-200 text-gray-900",
+  Shopping: "bg-gray-100 text-gray-800",
+  Health: "bg-gray-200 text-gray-900",
+  Transportation: "bg-gray-100 text-gray-800",
+  Other: "bg-gray-200 text-gray-900"
 };
 
 // Map of category to icon
@@ -306,7 +306,7 @@ export default function RecentExpenses({
                           <AlertDialogTrigger asChild>
                             <Button
                               variant="ghost"
-                              className="text-red-600 hover:text-red-900"
+                              className="text-gray-700 hover:text-gray-900"
                             >
                               Delete
                             </Button>
@@ -322,7 +322,7 @@ export default function RecentExpenses({
                               <AlertDialogCancel>Cancel</AlertDialogCancel>
                               <AlertDialogAction
                                 onClick={() => handleDelete(expense.id)}
-                                className="bg-red-600 hover:bg-red-700"
+                                className="bg-gray-800 hover:bg-gray-900"
                               >
                                 Delete
                               </AlertDialogAction>
