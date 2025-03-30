@@ -76,26 +76,26 @@ export default function ExpenseChart({ expenses }: ExpenseChartProps) {
     });
   }, [filteredExpenses, categories, today]);
 
-  // Colors for the different categories
+  // Colors for the different categories using grayscale/black palette
   const categoryColors: Record<string, string> = {
-    Groceries: "#3b82f6",
-    Utilities: "#10b981",
-    Entertainment: "#6366f1",
-    Housing: "#f59e0b",
-    Shopping: "#ef4444",
-    Health: "#8b5cf6",
-    Transportation: "#ec4899",
-    Other: "#64748b"
+    Groceries: "#000000",    // Black
+    Utilities: "#333333",    // Dark gray
+    Entertainment: "#555555", // Medium-dark gray
+    Housing: "#777777",      // Medium gray
+    Shopping: "#999999",     // Medium-light gray
+    Health: "#BBBBBB",       // Light gray
+    Transportation: "#DDDDDD", // Very light gray
+    Other: "#444444"         // Darker gray
   };
 
   // Generate colors for any other categories
   categories.forEach((category, index) => {
     if (!categoryColors[category]) {
-      const colors = [
-        "#3b82f6", "#10b981", "#6366f1", "#f59e0b", 
-        "#ef4444", "#8b5cf6", "#ec4899", "#64748b"
+      const grayscaleColors = [
+        "#000000", "#333333", "#555555", "#777777", 
+        "#999999", "#BBBBBB", "#DDDDDD", "#444444"
       ];
-      categoryColors[category] = colors[index % colors.length];
+      categoryColors[category] = grayscaleColors[index % grayscaleColors.length];
     }
   });
 

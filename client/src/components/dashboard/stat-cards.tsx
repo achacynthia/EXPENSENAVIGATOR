@@ -69,7 +69,7 @@ export default function StatCards({
                 <dd>
                   <div className={cn(
                     "text-xl font-bold flex items-center",
-                    percentChange < 0 ? "text-green-600" : percentChange > 0 ? "text-red-600" : "text-gray-500"
+                    percentChange < 0 ? "text-black" : percentChange > 0 ? "text-black" : "text-gray-500"
                   )}>
                     {percentChange < 0 ? <TrendingDown className="mr-1 h-5 w-5" /> : 
                      percentChange > 0 ? <TrendingUp className="mr-1 h-5 w-5" /> : null}

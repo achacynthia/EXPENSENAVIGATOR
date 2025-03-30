@@ -150,7 +150,7 @@ export default function AuthPage() {
                     Don't have an account?{" "}
                     <button 
                       onClick={() => setActiveTab("register")}
-                      className="text-slate-600 hover:text-slate-700 hover:underline font-medium"
+                      className="text-black hover:text-gray-700 hover:underline font-medium"
                     >
                       Register
                     </button>
@@ -253,7 +253,7 @@ export default function AuthPage() {
                     Already have an account?{" "}
                     <button 
                       onClick={() => setActiveTab("login")}
-                      className="text-slate-600 hover:text-slate-700 hover:underline font-medium"
+                      className="text-black hover:text-gray-700 hover:underline font-medium"
                     >
                       Login
                     </button>
@@ -275,25 +275,25 @@ export default function AuthPage() {
           </p>
           <ul className="space-y-4">
             <li className="flex items-start">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-slate-600 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-black mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
               </svg>
               <span className="text-gray-700">Track expenses across multiple categories</span>
             </li>
             <li className="flex items-start">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-slate-600 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-black mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
               </svg>
               <span className="text-gray-700">View insightful reports and analytics</span>
             </li>
             <li className="flex items-start">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-slate-600 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-black mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
               </svg>
               <span className="text-gray-700">Secure cloud-based storage for all your data</span>
             </li>
             <li className="flex items-start">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-slate-600 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-black mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
               </svg>
               <span className="text-gray-700">Access from any device with internet connection</span>

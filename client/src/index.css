@@ -18,19 +18,19 @@
 
 @layer components {
   .gradient-heading {
-    @apply text-slate-900 bg-clip-text;
+    @apply text-black bg-clip-text;
   }
   
   .card-gradient {
-    @apply bg-white dark:from-slate-950 dark:to-slate-900;
+    @apply bg-white;
   }
   
   .bg-hero {
-    @apply bg-slate-100;
+    @apply bg-gray-100;
   }
   
   .btn-gradient {
-    @apply bg-slate-900 hover:bg-slate-800 text-white transition-all;
+    @apply bg-black hover:bg-gray-800 text-white transition-all;
   }
 }
 
