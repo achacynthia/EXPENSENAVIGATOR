@@ -6,12 +6,44 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
-import { Loader2 } from "lucide-react";
+import { Loader2, Save } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { useMutation } from "@tanstack/react-query";
+import { apiRequest, queryClient } from "@/lib/queryClient";
+import { useState } from "react";
 
 export default function SettingsPage() {
   const { user, logoutMutation } = useAuth();
   const { toast } = useToast();
+  const [currency, setCurrency] = useState(user?.currency || "USD");
+  
+  // Currency update mutation
+  const updateCurrencyMutation = useMutation({
+    mutationFn: async (currency: string) => {
+      const res = await apiRequest("PATCH", "/api/user/settings", { currency });
+      return await res.json();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/user"] });
+      toast({
+        title: "Currency updated",
+        description: "Your preferred currency has been updated.",
+      });
+    },
+    onError: (error: Error) => {
+      toast({
+        title: "Failed to update currency",
+        description: error.message,
+        variant: "destructive",
+      });
+    },
+  });
+  
+  const handleCurrencyChange = (value: string) => {
+    setCurrency(value);
+    updateCurrencyMutation.mutate(value);
+  };
   
   const handleLogout = () => {
     logoutMutation.mutate();
@@ -85,6 +117,55 @@ export default function SettingsPage() {
                         Save Changes
                       </Button>
                     </form>
+                  </CardContent>
+                </Card>
+                
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Currency Settings</CardTitle>
+                    <CardDescription>
+                      Set your preferred currency for expense tracking
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-4">
+                      <div className="space-y-2">
+                        <Label htmlFor="currency">Preferred Currency</Label>
+                        <Select
+                          value={currency}
+                          onValueChange={handleCurrencyChange}
+                        >
+                          <SelectTrigger className="w-full">
+                            <SelectValue placeholder="Select a currency" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="USD">USD - US Dollar ($)</SelectItem>
+                            <SelectItem value="EUR">EUR - Euro (€)</SelectItem>
+                            <SelectItem value="GBP">GBP - British Pound (£)</SelectItem>
+                            <SelectItem value="JPY">JPY - Japanese Yen (¥)</SelectItem>
+                            <SelectItem value="CAD">CAD - Canadian Dollar (C$)</SelectItem>
+                            <SelectItem value="AUD">AUD - Australian Dollar (A$)</SelectItem>
+                            <SelectItem value="CNY">CNY - Chinese Yuan (¥)</SelectItem>
+                            <SelectItem value="INR">INR - Indian Rupee (₹)</SelectItem>
+                          </SelectContent>
+                        </Select>
+                        <p className="text-sm text-gray-500 mt-2">
+                          This will update the currency symbol throughout the application.
+                        </p>
+                      </div>
+                      <Button 
+                        type="button"
+                        disabled={updateCurrencyMutation.isPending}
+                        onClick={() => updateCurrencyMutation.mutate(currency)}
+                      >
+                        {updateCurrencyMutation.isPending ? (
+                          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                        ) : (
+                          <Save className="mr-2 h-4 w-4" />
+                        )}
+                        Update Currency
+                      </Button>
+                    </div>
                   </CardContent>
                 </Card>
                 
