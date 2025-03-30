@@ -37,7 +37,7 @@ export default function EditExpenseDialog({
     defaultValues: {
       description: expense.description,
       amount: expense.amount,
-      date: format(new Date(expense.date), "yyyy-MM-dd"),
+      date: new Date(expense.date),
       category: expense.category,
       merchant: expense.merchant || "",
       notes: expense.notes || ""
@@ -131,7 +131,14 @@ export default function EditExpenseDialog({
                   <FormItem>
                     <FormLabel>Date</FormLabel>
                     <FormControl>
-                      <Input type="date" {...field} />
+                      <Input 
+                        type="date" 
+                        value={field.value ? format(new Date(field.value), 'yyyy-MM-dd') : ''}
+                        onChange={(e) => {
+                          const date = e.target.value ? new Date(e.target.value) : null;
+                          field.onChange(date);
+                        }}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -177,7 +184,11 @@ export default function EditExpenseDialog({
                 <FormItem>
                   <FormLabel>Merchant/Payee</FormLabel>
                   <FormControl>
-                    <Input placeholder="Where did you spend?" {...field} />
+                    <Input 
+                      placeholder="Where did you spend?" 
+                      value={field.value || ''}
+                      onChange={(e) => field.onChange(e.target.value)}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -194,7 +205,8 @@ export default function EditExpenseDialog({
                     <Textarea
                       placeholder="Additional details (optional)"
                       className="resize-none"
-                      {...field}
+                      value={field.value || ''}
+                      onChange={(e) => field.onChange(e.target.value)}
                     />
                   </FormControl>
                   <FormMessage />

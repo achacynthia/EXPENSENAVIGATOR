@@ -34,7 +34,7 @@ export default function AddExpenseDialog({ isOpen, onClose }: AddExpenseDialogPr
     defaultValues: {
       description: "",
       amount: 0,
-      date: format(new Date(), "yyyy-MM-dd'T'HH:mm"),
+      date: new Date(),
       category: "",
       merchant: "",
       notes: ""
@@ -129,7 +129,14 @@ export default function AddExpenseDialog({ isOpen, onClose }: AddExpenseDialogPr
                   <FormItem>
                     <FormLabel>Date</FormLabel>
                     <FormControl>
-                      <Input type="date" {...field} />
+                      <Input 
+                        type="date" 
+                        value={field.value ? format(new Date(field.value), 'yyyy-MM-dd') : ''}
+                        onChange={(e) => {
+                          const date = e.target.value ? new Date(e.target.value) : null;
+                          field.onChange(date);
+                        }}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -175,7 +182,11 @@ export default function AddExpenseDialog({ isOpen, onClose }: AddExpenseDialogPr
                 <FormItem>
                   <FormLabel>Merchant/Payee</FormLabel>
                   <FormControl>
-                    <Input placeholder="Where did you spend?" {...field} />
+                    <Input 
+                      placeholder="Where did you spend?" 
+                      value={field.value || ''} 
+                      onChange={(e) => field.onChange(e.target.value)}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -192,7 +203,8 @@ export default function AddExpenseDialog({ isOpen, onClose }: AddExpenseDialogPr
                     <Textarea
                       placeholder="Additional details (optional)"
                       className="resize-none"
-                      {...field}
+                      value={field.value || ''}
+                      onChange={(e) => field.onChange(e.target.value)}
                     />
                   </FormControl>
                   <FormMessage />

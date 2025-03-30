@@ -39,14 +39,20 @@ export const insertUserSchema = createInsertSchema(users).pick({
   email: true,
 });
 
-export const insertExpenseSchema = createInsertSchema(expenses).pick({
-  amount: true,
-  description: true,
-  date: true,
-  category: true,
-  merchant: true,
-  notes: true,
-});
+export const insertExpenseSchema = createInsertSchema(expenses)
+  .pick({
+    amount: true,
+    description: true,
+    date: true,
+    category: true,
+    merchant: true,
+    notes: true,
+  })
+  .transform((data) => ({
+    ...data,
+    // Convert date string to Date object if it's a string
+    date: typeof data.date === 'string' ? new Date(data.date) : data.date,
+  }));
 
 // Export types
 export type InsertUser = z.infer<typeof insertUserSchema>;

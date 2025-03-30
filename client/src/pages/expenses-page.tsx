@@ -19,7 +19,7 @@ import { Search } from "lucide-react";
 export default function ExpensesPage() {
   const [isAddExpenseOpen, setIsAddExpenseOpen] = useState(false);
   const [search, setSearch] = useState("");
-  const [categoryFilter, setCategoryFilter] = useState("");
+  const [categoryFilter, setCategoryFilter] = useState("all");
   const { user } = useAuth();
 
   const { data: expenses, isLoading: isLoadingExpenses } = useQuery<Expense[]>({
@@ -31,13 +31,13 @@ export default function ExpensesPage() {
       expense.description.toLowerCase().includes(search.toLowerCase()) ||
       expense.merchant?.toLowerCase().includes(search.toLowerCase());
     
-    const matchesCategory = categoryFilter === "" || expense.category === categoryFilter;
+    const matchesCategory = categoryFilter === "all" || expense.category === categoryFilter;
     
     return matchesSearch && matchesCategory;
   }) || [];
 
   // Get unique categories from expenses
-  const categories = [...new Set(expenses?.map(expense => expense.category) || [])];
+  const categories = Array.from(new Set(expenses?.map(expense => expense.category) || []));
 
   return (
     <div className="h-screen flex overflow-hidden">
@@ -79,7 +79,7 @@ export default function ExpensesPage() {
                       <SelectValue placeholder="All Categories" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="">All Categories</SelectItem>
+                      <SelectItem value="all">All Categories</SelectItem>
                       {categories.map(category => (
                         <SelectItem key={category} value={category}>
                           {category}
