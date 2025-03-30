@@ -47,12 +47,12 @@ export const insertExpenseSchema = createInsertSchema(expenses)
     category: true,
     merchant: true,
     notes: true,
-  })
-  .transform((data) => ({
-    ...data,
-    // Convert date string to Date object if it's a string
-    date: typeof data.date === 'string' ? new Date(data.date) : data.date,
-  }));
+  });
+
+// Create a more specific schema for client-side validation
+export const clientExpenseSchema = insertExpenseSchema.extend({
+  date: z.union([z.date(), z.string().min(1).pipe(z.coerce.date())])
+});
 
 // Export types
 export type InsertUser = z.infer<typeof insertUserSchema>;

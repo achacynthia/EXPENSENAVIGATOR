@@ -12,7 +12,7 @@ import {
   SelectTrigger, 
   SelectValue 
 } from "@/components/ui/select";
-import { insertExpenseSchema, InsertExpense } from "@shared/schema";
+import { insertExpenseSchema, clientExpenseSchema, InsertExpense } from "@shared/schema";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
@@ -30,7 +30,7 @@ export default function AddExpenseDialog({ isOpen, onClose }: AddExpenseDialogPr
   const { toast } = useToast();
   
   const form = useForm<InsertExpense>({
-    resolver: zodResolver(insertExpenseSchema),
+    resolver: zodResolver(clientExpenseSchema),
     defaultValues: {
       description: "",
       amount: 0,

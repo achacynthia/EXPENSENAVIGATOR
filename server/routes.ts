@@ -28,7 +28,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
     if (!req.isAuthenticated()) return res.sendStatus(401);
     
     try {
-      const expenseData = insertExpenseSchema.parse(req.body);
+      // Ensure date is properly parsed, especially if it came as an ISO string
+      const data = req.body;
+      if (data.date && typeof data.date === 'string') {
+        data.date = new Date(data.date);
+      }
+      
+      const expenseData = insertExpenseSchema.parse(data);
       const expense = await storage.createExpense({
         ...expenseData,
         userId: req.user.id
@@ -82,7 +88,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(403).json({ message: "You don't have permission to update this expense" });
       }
       
-      const expenseData = insertExpenseSchema.parse(req.body);
+      // Ensure date is properly parsed, especially if it came as an ISO string
+      const data = req.body;
+      if (data.date && typeof data.date === 'string') {
+        data.date = new Date(data.date);
+      }
+      
+      const expenseData = insertExpenseSchema.parse(data);
       const updatedExpense = await storage.updateExpense(id, {
         ...expenseData,
         userId: req.user.id
