@@ -43,7 +43,13 @@ export default function AddExpenseDialog({ isOpen, onClose }: AddExpenseDialogPr
   
   const addExpenseMutation = useMutation({
     mutationFn: async (data: InsertExpense) => {
-      const res = await apiRequest("POST", "/api/expenses", data);
+      // Ensure date is properly formatted for API
+      const formattedData = {
+        ...data,
+        date: data.date instanceof Date ? data.date.toISOString() : data.date
+      };
+      
+      const res = await apiRequest("POST", "/api/expenses", formattedData);
       return await res.json();
     },
     onSuccess: () => {

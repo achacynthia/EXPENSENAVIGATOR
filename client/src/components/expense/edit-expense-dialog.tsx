@@ -46,7 +46,13 @@ export default function EditExpenseDialog({
   
   const updateExpenseMutation = useMutation({
     mutationFn: async (data: InsertExpense) => {
-      const res = await apiRequest("PATCH", `/api/expenses/${expense.id}`, data);
+      // Ensure date is properly formatted for API
+      const formattedData = {
+        ...data,
+        date: data.date instanceof Date ? data.date.toISOString() : data.date
+      };
+      
+      const res = await apiRequest("PATCH", `/api/expenses/${expense.id}`, formattedData);
       return await res.json();
     },
     onSuccess: () => {
