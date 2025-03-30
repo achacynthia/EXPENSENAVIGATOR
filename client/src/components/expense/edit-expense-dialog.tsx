@@ -226,6 +226,7 @@ export default function EditExpenseDialog({
               </Button>
               <Button 
                 type="submit"
+                className="btn-gradient"
                 disabled={updateExpenseMutation.isPending}
               >
                 {updateExpenseMutation.isPending ? (

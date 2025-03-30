@@ -54,12 +54,15 @@ export default function HomePage() {
         <MobileNav />
         <main className="flex-1 relative overflow-y-auto focus:outline-none pt-16 lg:pt-0">
           <div className="py-6">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-              <div className="flex items-center justify-between mb-6">
-                <h1 className="text-2xl font-semibold text-gray-900">Dashboard</h1>
+            <div className="responsive-container">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 gap-4">
+                <div>
+                  <h1 className="text-3xl font-bold gradient-heading">Dashboard</h1>
+                  <p className="text-gray-500">Welcome back, {user?.name}!</p>
+                </div>
                 <button 
                   onClick={() => setIsAddExpenseOpen(true)}
-                  className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
+                  className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium btn-gradient"
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" className="-ml-1 mr-2 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />

@@ -33,7 +33,7 @@ export default function ExpenseChart({ expenses }: ExpenseChartProps) {
   });
 
   // Get unique categories
-  const categories = [...new Set(filteredExpenses.map(expense => expense.category))];
+  const categories = Array.from(new Set(filteredExpenses.map(expense => expense.category)));
   
   // Prepare data for chart
   const chartData = useMemo(() => {

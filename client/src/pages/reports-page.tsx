@@ -124,7 +124,7 @@ export default function ReportsPage() {
                             <div 
                               className="h-2 bg-primary rounded"
                               style={{ 
-                                width: `${Math.min(Math.max(total / 10, 50), a00)}px`
+                                width: `${Math.min(Math.max(total / 10, 50), 400)}px`
                               }}
                             />
                             <span className="ml-4 text-gray-700">${total.toFixed(2)}</span>

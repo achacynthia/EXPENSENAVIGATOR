@@ -224,6 +224,7 @@ export default function AddExpenseDialog({ isOpen, onClose }: AddExpenseDialogPr
               </Button>
               <Button 
                 type="submit"
+                className="btn-gradient"
                 disabled={addExpenseMutation.isPending}
               >
                 {addExpenseMutation.isPending ? (

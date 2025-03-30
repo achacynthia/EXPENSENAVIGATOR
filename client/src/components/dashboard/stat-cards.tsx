@@ -20,11 +20,11 @@ export default function StatCards({
 }: StatCardsProps) {
   return (
     <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
-      <Card>
-        <CardContent className="p-5">
+      <Card className="overflow-hidden border-blue-100 hover:shadow-md transition-all">
+        <CardContent className="p-5 card-gradient">
           <div className="flex items-center">
-            <div className="flex-shrink-0">
-              <DollarSign className="h-6 w-6 text-gray-400" />
+            <div className="flex-shrink-0 bg-blue-100 p-3 rounded-full">
+              <DollarSign className="h-6 w-6 text-blue-600" />
             </div>
             <div className="ml-5 w-0 flex-1">
               <dl>
@@ -32,7 +32,7 @@ export default function StatCards({
                   Total Expenses (This Month)
                 </dt>
                 <dd>
-                  <div className="text-lg font-medium text-gray-900">
+                  <div className="text-xl font-bold text-gray-900">
                     ${totalExpenses.toFixed(2)}
                   </div>
                 </dd>
@@ -40,20 +40,23 @@ export default function StatCards({
             </div>
           </div>
         </CardContent>
-        <CardFooter className="bg-muted/20 px-5 py-3">
+        <CardFooter className="bg-blue-50 px-5 py-3">
           <div className="text-sm">
-            <Link href="/expenses" className="font-medium text-primary hover:text-primary/90">
+            <Link href="/expenses" className="font-medium text-blue-600 hover:text-blue-700 flex items-center">
               View all
+              <svg xmlns="http://www.w3.org/2000/svg" className="ml-1 h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
+              </svg>
             </Link>
           </div>
         </CardFooter>
       </Card>
 
-      <Card>
-        <CardContent className="p-5">
+      <Card className="overflow-hidden border-blue-100 hover:shadow-md transition-all">
+        <CardContent className="p-5 card-gradient">
           <div className="flex items-center">
-            <div className="flex-shrink-0">
-              <ArrowUpDown className="h-6 w-6 text-gray-400" />
+            <div className="flex-shrink-0 bg-blue-100 p-3 rounded-full">
+              <ArrowUpDown className="h-6 w-6 text-blue-600" />
             </div>
             <div className="ml-5 w-0 flex-1">
               <dl>
@@ -62,11 +65,11 @@ export default function StatCards({
                 </dt>
                 <dd>
                   <div className={cn(
-                    "text-lg font-medium flex items-center",
-                    percentChange < 0 ? "text-green-500" : percentChange > 0 ? "text-red-500" : "text-gray-500"
+                    "text-xl font-bold flex items-center",
+                    percentChange < 0 ? "text-green-600" : percentChange > 0 ? "text-red-600" : "text-gray-500"
                   )}>
-                    {percentChange < 0 ? <TrendingDown className="mr-1 h-4 w-4" /> : 
-                     percentChange > 0 ? <TrendingUp className="mr-1 h-4 w-4" /> : null}
+                    {percentChange < 0 ? <TrendingDown className="mr-1 h-5 w-5" /> : 
+                     percentChange > 0 ? <TrendingUp className="mr-1 h-5 w-5" /> : null}
                     {Math.abs(percentChange).toFixed(1)}%
                   </div>
                 </dd>
@@ -74,20 +77,23 @@ export default function StatCards({
             </div>
           </div>
         </CardContent>
-        <CardFooter className="bg-muted/20 px-5 py-3">
+        <CardFooter className="bg-blue-50 px-5 py-3">
           <div className="text-sm">
-            <Link href="/reports" className="font-medium text-primary hover:text-primary/90">
+            <Link href="/reports" className="font-medium text-blue-600 hover:text-blue-700 flex items-center">
               View report
+              <svg xmlns="http://www.w3.org/2000/svg" className="ml-1 h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
+              </svg>
             </Link>
           </div>
         </CardFooter>
       </Card>
 
-      <Card>
-        <CardContent className="p-5">
+      <Card className="overflow-hidden border-blue-100 hover:shadow-md transition-all">
+        <CardContent className="p-5 card-gradient">
           <div className="flex items-center">
-            <div className="flex-shrink-0">
-              <PieChart className="h-6 w-6 text-gray-400" />
+            <div className="flex-shrink-0 bg-blue-100 p-3 rounded-full">
+              <PieChart className="h-6 w-6 text-blue-600" />
             </div>
             <div className="ml-5 w-0 flex-1">
               <dl>
@@ -95,7 +101,7 @@ export default function StatCards({
                   Highest Category
                 </dt>
                 <dd>
-                  <div className="text-lg font-medium text-gray-900">
+                  <div className="text-xl font-bold text-gray-900">
                     {highestCategory}
                   </div>
                 </dd>
@@ -103,20 +109,23 @@ export default function StatCards({
             </div>
           </div>
         </CardContent>
-        <CardFooter className="bg-muted/20 px-5 py-3">
+        <CardFooter className="bg-blue-50 px-5 py-3">
           <div className="text-sm">
-            <Link href="/reports" className="font-medium text-primary hover:text-primary/90">
+            <Link href="/reports" className="font-medium text-blue-600 hover:text-blue-700 flex items-center">
               View details
+              <svg xmlns="http://www.w3.org/2000/svg" className="ml-1 h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
+              </svg>
             </Link>
           </div>
         </CardFooter>
       </Card>
 
-      <Card>
-        <CardContent className="p-5">
+      <Card className="overflow-hidden border-blue-100 hover:shadow-md transition-all">
+        <CardContent className="p-5 card-gradient">
           <div className="flex items-center">
-            <div className="flex-shrink-0">
-              <Clock className="h-6 w-6 text-gray-400" />
+            <div className="flex-shrink-0 bg-blue-100 p-3 rounded-full">
+              <Clock className="h-6 w-6 text-blue-600" />
             </div>
             <div className="ml-5 w-0 flex-1">
               <dl>
@@ -124,7 +133,7 @@ export default function StatCards({
                   Recent Entries
                 </dt>
                 <dd>
-                  <div className="text-lg font-medium text-gray-900">
+                  <div className="text-xl font-bold text-gray-900">
                     {recentEntriesCount} expenses
                   </div>
                 </dd>
@@ -132,10 +141,13 @@ export default function StatCards({
             </div>
           </div>
         </CardContent>
-        <CardFooter className="bg-muted/20 px-5 py-3">
+        <CardFooter className="bg-blue-50 px-5 py-3">
           <div className="text-sm">
-            <Link href="/expenses" className="font-medium text-primary hover:text-primary/90">
+            <Link href="/expenses" className="font-medium text-blue-600 hover:text-blue-700 flex items-center">
               View all
+              <svg xmlns="http://www.w3.org/2000/svg" className="ml-1 h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
+              </svg>
             </Link>
           </div>
         </CardFooter>

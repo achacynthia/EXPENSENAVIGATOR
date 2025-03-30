@@ -81,12 +81,12 @@ export default function AuthPage() {
         <div className="w-full max-w-md">
           <div className="mb-8 text-center lg:text-left">
             <div className="flex mb-2 items-center justify-center lg:justify-start">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-primary" viewBox="0 0 20 20" fill="currentColor">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 text-blue-500" viewBox="0 0 20 20" fill="currentColor">
                 <path fillRule="evenodd" d="M4 4a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1.586a1 1 0 01-.707-.293l-1.121-1.121A2 2 0 0011.172 2H8.828a2 2 0 00-1.414.586L6.293 3.707A1 1 0 015.586 4H4zm6 9a3 3 0 100-6 3 3 0 000 6z" clipRule="evenodd" />
               </svg>
-              <h1 className="ml-2 text-2xl font-semibold text-gray-800">ExpenseTrack</h1>
+              <h1 className="ml-2 text-3xl font-bold gradient-heading">ExpenseTrack</h1>
             </div>
-            <p className="text-gray-600">Keep track of your expenses with ease.</p>
+            <p className="text-gray-600 text-lg">Smart expense management made simple.</p>
           </div>
 
           <Tabs defaultValue="login" value={activeTab} onValueChange={setActiveTab}>
@@ -134,7 +134,7 @@ export default function AuthPage() {
                       />
                       <Button 
                         type="submit" 
-                        className="w-full"
+                        className="w-full btn-gradient"
                         disabled={loginMutation.isPending}
                       >
                         {loginMutation.isPending ? (
@@ -150,7 +150,7 @@ export default function AuthPage() {
                     Don't have an account?{" "}
                     <button 
                       onClick={() => setActiveTab("register")}
-                      className="text-primary hover:underline"
+                      className="text-blue-600 hover:text-blue-700 hover:underline font-medium"
                     >
                       Register
                     </button>
@@ -237,7 +237,7 @@ export default function AuthPage() {
                       />
                       <Button 
                         type="submit" 
-                        className="w-full"
+                        className="w-full btn-gradient"
                         disabled={registerMutation.isPending}
                       >
                         {registerMutation.isPending ? (
@@ -253,7 +253,7 @@ export default function AuthPage() {
                     Already have an account?{" "}
                     <button 
                       onClick={() => setActiveTab("login")}
-                      className="text-primary hover:underline"
+                      className="text-blue-600 hover:text-blue-700 hover:underline font-medium"
                     >
                       Login
                     </button>
@@ -265,9 +265,9 @@ export default function AuthPage() {
         </div>
       </div>
       
-      <div className="hidden lg:flex flex-1 bg-primary/5 p-12 items-center justify-center">
-        <div className="max-w-lg">
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">Track Your Expenses Anywhere</h2>
+      <div className="hidden lg:flex flex-1 bg-hero p-12 items-center justify-center">
+        <div className="max-w-lg bg-white/90 p-8 rounded-xl shadow-lg">
+          <h2 className="text-3xl font-bold gradient-heading mb-4">Track Your Expenses Anywhere</h2>
           <p className="text-lg text-gray-600 mb-6">
             ExpenseTrack makes it easy to monitor your spending habits,
             categorize expenses, and gain insights into your financial health.
@@ -275,25 +275,25 @@ export default function AuthPage() {
           </p>
           <ul className="space-y-4">
             <li className="flex items-start">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-primary mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-blue-600 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
               </svg>
               <span className="text-gray-700">Track expenses across multiple categories</span>
             </li>
             <li className="flex items-start">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-primary mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-blue-600 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
               </svg>
               <span className="text-gray-700">View insightful reports and analytics</span>
             </li>
             <li className="flex items-start">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-primary mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-blue-600 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
               </svg>
               <span className="text-gray-700">Secure cloud-based storage for all your data</span>
             </li>
             <li className="flex items-start">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-primary mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-blue-600 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
               </svg>
               <span className="text-gray-700">Access from any device with internet connection</span>

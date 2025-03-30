@@ -113,7 +113,7 @@ export default function SettingsPage() {
                           />
                         </div>
                       </div>
-                      <Button type="submit">
+                      <Button type="submit" className="btn-gradient">
                         Save Changes
                       </Button>
                     </form>
@@ -155,6 +155,7 @@ export default function SettingsPage() {
                       </div>
                       <Button 
                         type="button"
+                        className="btn-gradient"
                         disabled={updateCurrencyMutation.isPending}
                         onClick={() => updateCurrencyMutation.mutate(currency)}
                       >
@@ -203,7 +204,7 @@ export default function SettingsPage() {
                           <Switch id="budget-alerts" />
                         </div>
                       </div>
-                      <Button type="submit">
+                      <Button type="submit" className="btn-gradient">
                         Save Preferences
                       </Button>
                     </form>
