@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -12,7 +12,7 @@ import {
   SelectTrigger, 
   SelectValue 
 } from "@/components/ui/select";
-import { insertExpenseSchema, clientExpenseSchema, InsertExpense } from "@shared/schema";
+import { insertExpenseSchema, clientExpenseSchema, InsertExpense, ExpenseCategory } from "@shared/schema";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
@@ -39,7 +39,8 @@ export default function AddExpenseDialog({ isOpen, onClose }: AddExpenseDialogPr
       description: "",
       amount: 0,
       date: new Date(),
-      category: "",
+      categoryId: 0,
+      subcategoryId: null,
       merchant: "",
       notes: ""
     }
@@ -122,8 +123,11 @@ export default function AddExpenseDialog({ isOpen, onClose }: AddExpenseDialogPr
                           min="0.01"
                           placeholder="0.00"
                           className="pl-7"
-                          {...field}
-                          onChange={(e) => field.onChange(parseFloat(e.target.value))}
+                          value={field.value || ''}
+                          onChange={(e) => {
+                            const value = e.target.value ? parseFloat(e.target.value) : 0;
+                            field.onChange(value);
+                          }}
                         />
                       </div>
                     </FormControl>
@@ -156,33 +160,38 @@ export default function AddExpenseDialog({ isOpen, onClose }: AddExpenseDialogPr
             
             <FormField
               control={form.control}
-              name="category"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Category</FormLabel>
-                  <Select 
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                  >
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select a category" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      <SelectItem value="Groceries">Groceries</SelectItem>
-                      <SelectItem value="Utilities">Utilities</SelectItem>
-                      <SelectItem value="Housing">Housing</SelectItem>
-                      <SelectItem value="Transportation">Transportation</SelectItem>
-                      <SelectItem value="Entertainment">Entertainment</SelectItem>
-                      <SelectItem value="Shopping">Shopping</SelectItem>
-                      <SelectItem value="Health">Health</SelectItem>
-                      <SelectItem value="Other">Other</SelectItem>
-                    </SelectContent>
-                  </Select>
-                  <FormMessage />
-                </FormItem>
-              )}
+              name="categoryId"
+              render={({ field }) => {
+                // Fetch categories
+                const { data: categories } = useQuery<ExpenseCategory[]>({
+                  queryKey: ['/api/expense-categories'],
+                  enabled: !!user
+                });
+                
+                return (
+                  <FormItem>
+                    <FormLabel>Category</FormLabel>
+                    <Select 
+                      onValueChange={(value) => field.onChange(parseInt(value))}
+                      value={field.value ? field.value.toString() : undefined}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select a category" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        {categories?.map((category: ExpenseCategory) => (
+                          <SelectItem key={category.id} value={category.id.toString()}>
+                            {category.name}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                );
+              }}
             />
             
             <FormField
