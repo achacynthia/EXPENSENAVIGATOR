@@ -6,7 +6,8 @@ import {
   DollarSign, 
   BarChart2, 
   Settings, 
-  LogOut 
+  LogOut,
+  PieChart
 } from "lucide-react";
 
 export default function Sidebar() {
@@ -16,6 +17,7 @@ export default function Sidebar() {
   const navigation = [
     { name: "Dashboard", href: "/", icon: Home },
     { name: "Expenses", href: "/expenses", icon: DollarSign },
+    { name: "Budgets", href: "/budgets", icon: PieChart },
     { name: "Reports", href: "/reports", icon: BarChart2 },
     { name: "Settings", href: "/settings", icon: Settings },
   ];

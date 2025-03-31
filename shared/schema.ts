@@ -86,10 +86,12 @@ export const incomes = pgTable("incomes", {
 export const budgets = pgTable("budgets", {
   id: serial("id").primaryKey(),
   userId: integer("user_id").notNull().references(() => users.id),
-  title: text("title").notNull(),
+  name: text("name").notNull(),
+  period: text("period").notNull().default("monthly"),
   startDate: timestamp("start_date").notNull(),
   endDate: timestamp("end_date").notNull(),
-  totalBudget: doublePrecision("total_budget").notNull(),
+  amount: doublePrecision("amount").notNull(),
+  notes: text("notes"),
   createdAt: timestamp("created_at").notNull().defaultNow(),
 });
 
@@ -174,10 +176,12 @@ export const insertIncomeSchema = createInsertSchema(incomes)
 // Budget schemas
 export const insertBudgetSchema = createInsertSchema(budgets)
   .pick({
-    title: true,
+    name: true,
+    period: true,
     startDate: true,
     endDate: true,
-    totalBudget: true,
+    amount: true,
+    notes: true,
   });
 
 export const insertBudgetAllocationSchema = createInsertSchema(budgetAllocations)

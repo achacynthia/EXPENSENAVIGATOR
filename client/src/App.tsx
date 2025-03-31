@@ -10,12 +10,14 @@ import AuthPage from "@/pages/auth-page";
 import ExpensesPage from "@/pages/expenses-page";
 import ReportsPage from "@/pages/reports-page";
 import SettingsPage from "@/pages/settings-page";
+import BudgetsPage from "@/pages/budgets-page";
 
 function Router() {
   return (
     <Switch>
       <ProtectedRoute path="/" component={HomePage} />
       <ProtectedRoute path="/expenses" component={ExpensesPage} />
+      <ProtectedRoute path="/budgets" component={BudgetsPage} />
       <ProtectedRoute path="/reports" component={ReportsPage} />
       <ProtectedRoute path="/settings" component={SettingsPage} />
       <Route path="/auth" component={AuthPage} />
