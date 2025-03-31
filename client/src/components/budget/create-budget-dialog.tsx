@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { queryClient } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 import { clientBudgetSchema } from "@shared/schema";
@@ -60,7 +60,21 @@ export default function CreateBudgetDialog({
   onClose,
 }: CreateBudgetDialogProps) {
   const [isPeriodCustom, setIsPeriodCustom] = useState(false);
+  const [selectedCategories, setSelectedCategories] = useState<number[]>([]);
   const { toast } = useToast();
+  
+  // Fetch expense categories
+  const { data: categories, isLoading: isCategoriesLoading } = useQuery<{ id: number; name: string }[]>({
+    queryKey: ["/api/expense-categories"],
+    queryFn: async () => {
+      const response = await fetch("/api/expense-categories");
+      if (!response.ok) {
+        throw new Error("Failed to fetch expense categories");
+      }
+      return response.json();
+    },
+    enabled: isOpen,
+  });
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -177,7 +191,12 @@ export default function CreateBudgetDialog({
   }
 
   const onSubmit = (data: FormValues) => {
-    createBudgetMutation.mutate(data);
+    // Include the selected categories with the budget data
+    const budgetData = {
+      ...data,
+      categoryIds: selectedCategories.length > 0 ? selectedCategories : undefined
+    };
+    createBudgetMutation.mutate(budgetData);
   };
 
   return (
@@ -354,6 +373,46 @@ export default function CreateBudgetDialog({
                 />
               </div>
 
+              <FormItem>
+                <FormLabel>Categories</FormLabel>
+                <div className="grid grid-cols-2 gap-2 mt-2">
+                  {isCategoriesLoading ? (
+                    <div className="col-span-2 flex justify-center py-4">
+                      <Loader2 className="h-5 w-5 animate-spin" />
+                    </div>
+                  ) : categories && categories.length > 0 ? (
+                    categories.map((category) => (
+                      <div key={category.id} className="flex items-center space-x-2">
+                        <input
+                          type="checkbox"
+                          id={`category-${category.id}`}
+                          checked={selectedCategories.includes(category.id)}
+                          onChange={(e) => {
+                            if (e.target.checked) {
+                              setSelectedCategories([...selectedCategories, category.id]);
+                            } else {
+                              setSelectedCategories(selectedCategories.filter(id => id !== category.id));
+                            }
+                          }}
+                          className="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary"
+                        />
+                        <label
+                          htmlFor={`category-${category.id}`}
+                          className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                        >
+                          {category.name}
+                        </label>
+                      </div>
+                    ))
+                  ) : (
+                    <p className="text-sm text-gray-500 col-span-2">No categories available</p>
+                  )}
+                </div>
+                <FormDescription>
+                  Select the categories this budget will track
+                </FormDescription>
+              </FormItem>
+              
               <FormField
                 control={form.control}
                 name="notes"

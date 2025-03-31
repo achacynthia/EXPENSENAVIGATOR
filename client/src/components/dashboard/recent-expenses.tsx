@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
-import { Expense } from "@shared/schema";
+import { Expense, ExpenseCategory } from "@shared/schema";
 import { format } from "date-fns";
 import { 
   Card, 
@@ -123,13 +123,34 @@ export default function RecentExpenses({
   const [currentPage, setCurrentPage] = useState(1);
   const [editingExpense, setEditingExpense] = useState<Expense | null>(null);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
+  const [enrichedExpenses, setEnrichedExpenses] = useState<(Expense & { category: string })[]>([]);
   const { toast } = useToast();
   const { user } = useAuth();
+  
+  // Fetch categories for mapping
+  const { data: categories } = useQuery<ExpenseCategory[]>({
+    queryKey: ['/api/expense-categories'],
+    enabled: !!user
+  });
+  
+  // Enrich expenses with category names
+  useEffect(() => {
+    if (expenses && categories) {
+      const newEnrichedExpenses = expenses.map(expense => {
+        const category = categories.find(c => c.id === expense.categoryId);
+        return {
+          ...expense,
+          category: category?.name || 'Uncategorized'
+        };
+      });
+      setEnrichedExpenses(newEnrichedExpenses);
+    }
+  }, [expenses, categories]);
   
   const pageSize = 5;
   
   // Filter expenses based on search term
-  const filteredExpenses = expenses.filter(expense => 
+  const filteredExpenses = enrichedExpenses.filter(expense => 
     expense.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
     expense.merchant?.toLowerCase().includes(searchTerm.toLowerCase()) ||
     expense.category.toLowerCase().includes(searchTerm.toLowerCase())

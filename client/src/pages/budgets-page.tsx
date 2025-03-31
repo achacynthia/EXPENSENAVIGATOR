@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Loader2, Plus } from "lucide-react";
 import BudgetList from "@/components/budget/budget-list";
 import CreateBudgetDialog from "@/components/budget/create-budget-dialog";
+import MainLayout from "@/components/layout/main-layout";
 
 export default function BudgetsPage() {
   const { user } = useAuth();
@@ -37,26 +38,30 @@ export default function BudgetsPage() {
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center min-h-[400px]">
-        <Loader2 className="h-8 w-8 animate-spin text-gray-400" />
-      </div>
+      <MainLayout>
+        <div className="flex items-center justify-center min-h-[400px]">
+          <Loader2 className="h-8 w-8 animate-spin text-gray-400" />
+        </div>
+      </MainLayout>
     );
   }
 
   if (error) {
     return (
-      <div className="text-center py-12">
-        <p className="text-red-500">Error loading budgets</p>
-        <p className="text-sm text-gray-500 mt-1">{(error as Error).message}</p>
-      </div>
+      <MainLayout>
+        <div className="text-center py-12">
+          <p className="text-red-500">Error loading budgets</p>
+          <p className="text-sm text-gray-500 mt-1">{(error as Error).message}</p>
+        </div>
+      </MainLayout>
     );
   }
 
   return (
-    <div className="container max-w-6xl mx-auto px-4 py-8">
+    <MainLayout>
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold">Budget Management</h1>
-        <Button onClick={() => setIsCreateBudgetOpen(true)}>
+        <h1 className="text-2xl font-bold gradient-heading">Budget Management</h1>
+        <Button onClick={() => setIsCreateBudgetOpen(true)} className="btn-gradient">
           <Plus className="h-4 w-4 mr-2" />
           New Budget
         </Button>
@@ -74,6 +79,6 @@ export default function BudgetsPage() {
         isOpen={isCreateBudgetOpen}
         onClose={() => setIsCreateBudgetOpen(false)}
       />
-    </div>
+    </MainLayout>
   );
 }

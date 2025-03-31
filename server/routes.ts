@@ -778,11 +778,34 @@ export async function registerRoutes(app: Express): Promise<Server> {
         data.endDate = new Date(data.endDate);
       }
       
+      // Extract categoryIds before validation
+      const categoryIds = data.categoryIds;
+      delete data.categoryIds;
+      
       const budgetData = insertBudgetSchema.parse(data);
       const budget = await storage.createBudget({
         ...budgetData,
         userId: req.user.id
       });
+      
+      // If categories are provided, create budget allocations for them
+      if (categoryIds && Array.isArray(categoryIds) && categoryIds.length > 0) {
+        const budgetId = budget.id;
+        
+        // Verify all categories belong to the user
+        for (const categoryId of categoryIds) {
+          const category = await storage.getExpenseCategoryById(categoryId);
+          if (category && category.userId === req.user.id) {
+            // Create an initial allocation with zero amount that can be updated later
+            await storage.createBudgetAllocation({
+              budgetId,
+              categoryId,
+              subcategoryId: null,
+              amount: 0
+            });
+          }
+        }
+      }
       
       res.status(201).json(budget);
     } catch (error) {
