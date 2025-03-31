@@ -452,9 +452,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
         // New mode (category ID)
         const expenseData = insertExpenseSchema.parse(data);
         
-        // Verify the category belongs to the user
+        // Verify the category belongs to the user or user is admin
         const category = await storage.getExpenseCategoryById(expenseData.categoryId);
-        if (!category || category.userId !== req.user.id) {
+        const userRole = await storage.getUserRole(req.user.id);
+        if (!category || (category.userId !== req.user.id && userRole !== "admin")) {
           return res.status(403).json({ message: "Invalid category" });
         }
         
@@ -513,7 +514,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(404).json({ message: "Expense not found" });
       }
       
-      if (expense.userId !== req.user.id) {
+      const userRole = await storage.getUserRole(req.user.id);
+      if (expense.userId !== req.user.id && userRole !== "admin") {
         return res.status(403).json({ message: "You don't have permission to update this expense" });
       }
       
@@ -537,9 +539,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
         // New mode (category ID)
         const expenseData = insertExpenseSchema.parse(data);
         
-        // Verify the category belongs to the user
+        // Verify the category belongs to the user or user is admin
+        const categoryUserRole = await storage.getUserRole(req.user.id);
         const category = await storage.getExpenseCategoryById(expenseData.categoryId);
-        if (!category || category.userId !== req.user.id) {
+        if (!category || (category.userId !== req.user.id && categoryUserRole !== "admin")) {
           return res.status(403).json({ message: "Invalid category" });
         }
         
@@ -573,12 +576,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const id = parseInt(req.params.id);
       const expense = await storage.getExpenseById(id);
+      const userRole = await storage.getUserRole(req.user.id);
       
       if (!expense) {
         return res.status(404).json({ message: "Expense not found" });
       }
       
-      if (expense.userId !== req.user.id) {
+      // Allow admins to delete any expense, otherwise only allow users to delete their own
+      if (expense.userId !== req.user.id && userRole !== 'admin') {
         return res.status(403).json({ message: "You don't have permission to delete this expense" });
       }
       

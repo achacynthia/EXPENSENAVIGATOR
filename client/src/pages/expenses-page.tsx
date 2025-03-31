@@ -14,6 +14,9 @@ import {
 } from "@/components/ui/select";
 import { Search } from "lucide-react";
 import MainLayout from "@/components/layout/main-layout";
+import { ExportButton } from "@/components/ui/export-button";
+import { exportExpensesToCSV, exportExpensesToPDF } from "@/lib/export-utils";
+import { useToast } from "@/hooks/use-toast";
 
 export default function ExpensesPage() {
   const [isAddExpenseOpen, setIsAddExpenseOpen] = useState(false);
@@ -64,15 +67,24 @@ export default function ExpensesPage() {
     <MainLayout>
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6">
         <h1 className="text-2xl font-bold gradient-heading mb-4 sm:mb-0">Expenses</h1>
-        <button 
-          onClick={() => setIsAddExpenseOpen(true)}
-          className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium btn-gradient"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" className="-ml-1 mr-2 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-          </svg>
-          Add Expense
-        </button>
+        <div className="flex gap-2">
+          <ExportButton 
+            onExportPDF={() => exportExpensesToPDF(filteredEnrichedExpenses, user?.currency || 'XAF')}
+            onExportCSV={() => exportExpensesToCSV(filteredEnrichedExpenses, user?.currency || 'XAF')}
+            isLoading={isLoadingExpenses}
+            disabled={!filteredEnrichedExpenses?.length}
+            label="Export"
+          />
+          <button 
+            onClick={() => setIsAddExpenseOpen(true)}
+            className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium btn-gradient"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" className="-ml-1 mr-2 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+            </svg>
+            Add Expense
+          </button>
+        </div>
       </div>
       
       <div className="mb-6 flex flex-col sm:flex-row gap-4">

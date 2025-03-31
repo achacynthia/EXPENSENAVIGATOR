@@ -59,6 +59,7 @@ export default function AddExpenseDialog({ isOpen, onClose }: AddExpenseDialogPr
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/expenses"] });
+      queryClient.invalidateQueries({ queryKey: ["/api/admin/expenses"] });
       toast({
         title: "Expense added",
         description: "Your expense has been added successfully.",
@@ -121,11 +122,11 @@ export default function AddExpenseDialog({ isOpen, onClose }: AddExpenseDialogPr
                           type="number"
                           step="0.01"
                           min="0.01"
-                          placeholder="0.00"
+                          placeholder=""
                           className="pl-7"
-                          value={field.value || ''}
+                          value={field.value === 0 ? '' : field.value}
                           onChange={(e) => {
-                            const value = e.target.value ? parseFloat(e.target.value) : 0;
+                            const value = e.target.value !== '' ? parseFloat(e.target.value) : 0;
                             field.onChange(value);
                           }}
                         />

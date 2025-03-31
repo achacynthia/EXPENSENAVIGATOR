@@ -1,12 +1,15 @@
 import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useAuth } from "@/hooks/use-auth";
-import { Budget } from "@/lib/models";
+import { Budget } from "@shared/schema";
 import { Button } from "@/components/ui/button";
 import { Loader2, Plus } from "lucide-react";
 import BudgetList from "@/components/budget/budget-list";
 import CreateBudgetDialog from "@/components/budget/create-budget-dialog";
 import MainLayout from "@/components/layout/main-layout";
+import { ExportButton } from "@/components/ui/export-button";
+import { exportBudgetsToCSV, exportBudgetsToPDF } from "@/lib/export-utils";
+import { useToast } from "@/hooks/use-toast";
 
 export default function BudgetsPage() {
   const { user } = useAuth();
@@ -61,10 +64,19 @@ export default function BudgetsPage() {
     <MainLayout>
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-bold gradient-heading">Budget Management</h1>
-        <Button onClick={() => setIsCreateBudgetOpen(true)} className="btn-gradient">
-          <Plus className="h-4 w-4 mr-2" />
-          New Budget
-        </Button>
+        <div className="flex gap-2">
+          <ExportButton 
+            onExportPDF={() => exportBudgetsToPDF(budgets || [], user?.currency || 'XAF')}
+            onExportCSV={() => exportBudgetsToCSV(budgets || [], user?.currency || 'XAF')}
+            isLoading={isLoading}
+            disabled={!budgets?.length}
+            label="Export"
+          />
+          <Button onClick={() => setIsCreateBudgetOpen(true)} className="btn-gradient">
+            <Plus className="h-4 w-4 mr-2" />
+            New Budget
+          </Button>
+        </div>
       </div>
 
       <div className="mb-6">

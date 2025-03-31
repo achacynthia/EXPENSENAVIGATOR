@@ -174,6 +174,7 @@ export default function RecentExpenses({
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/expenses"] });
+      queryClient.invalidateQueries({ queryKey: ["/api/admin/expenses"] });
       toast({
         title: "Expense deleted",
         description: "The expense has been deleted successfully.",
