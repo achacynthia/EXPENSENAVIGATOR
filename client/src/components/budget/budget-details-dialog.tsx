@@ -294,7 +294,7 @@ export default function BudgetDetailsDialog({
             {budget && (
               <>
                 <span className="block text-sm text-gray-500 mt-1">
-                  Period: {budget.period.charAt(0).toUpperCase() + budget.period.slice(1)}
+                  Period: {budget.period ? budget.period.charAt(0).toUpperCase() + budget.period.slice(1) : 'N/A'}
                 </span>
                 <span className="block text-sm text-gray-500">
                   {format(new Date(budget.startDate), "PP")} - {format(new Date(budget.endDate), "PP")}

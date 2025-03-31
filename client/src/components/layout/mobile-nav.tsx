@@ -10,7 +10,8 @@ import {
   LogOut,
   Menu,
   X,
-  PieChart
+  PieChart,
+  ShieldAlert
 } from "lucide-react";
 
 export default function MobileNav() {
@@ -18,12 +19,24 @@ export default function MobileNav() {
   const [location] = useLocation();
   const { user, logoutMutation } = useAuth();
 
-  const navigation = [
+  // Base navigation items for all users
+  const baseNavigation = [
     { name: "Dashboard", href: "/", icon: Home },
     { name: "Expenses", href: "/expenses", icon: DollarSign },
     { name: "Budgets", href: "/budgets", icon: PieChart },
     { name: "Reports", href: "/reports", icon: BarChart2 },
     { name: "Settings", href: "/settings", icon: Settings },
+  ];
+  
+  // Admin-only navigation items
+  const adminNavigation = [
+    { name: "Admin Dashboard", href: "/admin", icon: ShieldAlert },
+  ];
+  
+  // Combine navigation items based on user role
+  const navigation = [
+    ...baseNavigation,
+    ...(user?.role === "admin" ? adminNavigation : []),
   ];
 
   const toggleMenu = () => {

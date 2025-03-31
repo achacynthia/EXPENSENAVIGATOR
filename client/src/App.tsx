@@ -11,6 +11,7 @@ import ExpensesPage from "@/pages/expenses-page";
 import ReportsPage from "@/pages/reports-page";
 import SettingsPage from "@/pages/settings-page";
 import BudgetsPage from "@/pages/budgets-page";
+import AdminPage from "@/pages/admin-page";
 
 function Router() {
   return (
@@ -20,6 +21,7 @@ function Router() {
       <ProtectedRoute path="/budgets" component={BudgetsPage} />
       <ProtectedRoute path="/reports" component={ReportsPage} />
       <ProtectedRoute path="/settings" component={SettingsPage} />
+      <ProtectedRoute path="/admin" component={AdminPage} requiredRole="admin" />
       <Route path="/auth" component={AuthPage} />
       <Route component={NotFound} />
     </Switch>

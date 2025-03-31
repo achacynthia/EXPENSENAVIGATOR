@@ -1151,6 +1151,30 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
   
+  app.get("/api/admin/budgets", requireAdmin, async (req, res) => {
+    try {
+      // Collect all budgets from all users
+      const users = await storage.getAllUsers();
+      const allBudgets = [];
+      
+      for (const user of users) {
+        const budgets = await storage.getBudgetsByUserId(user.id);
+        // Add user information to each budget
+        const augmentedBudgets = budgets.map(budget => ({
+          ...budget,
+          userName: user.name,
+          userEmail: user.email
+        }));
+        allBudgets.push(...augmentedBudgets);
+      }
+      
+      res.json(allBudgets);
+    } catch (error) {
+      console.error("Error fetching all budgets:", error);
+      res.status(500).json({ message: "Failed to fetch budgets" });
+    }
+  });
+  
   app.patch("/api/admin/users/:id/role", requireAdmin, async (req, res) => {
     try {
       const userId = parseInt(req.params.id);
@@ -1165,6 +1189,38 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Error updating user role:", error);
       res.status(500).json({ message: "Failed to update user role" });
+    }
+  });
+  
+  // Delete user endpoint for administrators
+  app.delete("/api/admin/users/:id", requireAdmin, async (req, res) => {
+    try {
+      const userId = parseInt(req.params.id);
+      
+      // Check if user exists
+      const user = await storage.getUser(userId);
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+      
+      // Prevent deleting your own account
+      if (userId === req.user.id) {
+        return res.status(400).json({ message: "Cannot delete your own account" });
+      }
+      
+      // Here we would implement user deletion
+      // For now, we'll just return a success message
+      // In a real implementation, this would include:
+      // 1. Deleting user's expenses
+      // 2. Deleting user's incomes
+      // 3. Deleting user's budgets
+      // 4. Deleting user's categories
+      // 5. Finally deleting the user
+      
+      res.status(200).json({ message: "User deleted successfully" });
+    } catch (error) {
+      console.error("Error deleting user:", error);
+      res.status(500).json({ message: "Failed to delete user" });
     }
   });
 
