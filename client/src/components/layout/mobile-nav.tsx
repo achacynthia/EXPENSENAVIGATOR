@@ -11,7 +11,9 @@ import {
   Menu,
   X,
   PieChart,
-  ShieldAlert
+  ShieldAlert,
+  CreditCard,
+  TrendingUp
 } from "lucide-react";
 
 export default function MobileNav() {
@@ -22,7 +24,8 @@ export default function MobileNav() {
   // Base navigation items for all users
   const baseNavigation = [
     { name: "Dashboard", href: "/", icon: Home },
-    { name: "Expenses", href: "/expenses", icon: DollarSign },
+    { name: "Expenses", href: "/expenses", icon: CreditCard },
+    { name: "Income", href: "/income", icon: TrendingUp },
     { name: "Budgets", href: "/budgets", icon: PieChart },
     { name: "Reports", href: "/reports", icon: BarChart2 },
     { name: "Settings", href: "/settings", icon: Settings },
