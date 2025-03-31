@@ -122,10 +122,9 @@ export default function BudgetList({ budgets }: BudgetListProps) {
             <Button 
               variant="outline" 
               onClick={() => {
-                const createBudgetDialog = document.getElementById("create-budget-dialog-trigger");
-                if (createBudgetDialog) {
-                  (createBudgetDialog as HTMLButtonElement).click();
-                }
+                // This will be handled by the parent component
+                // which will toggle the CreateBudgetDialog's open state
+                window.dispatchEvent(new CustomEvent('open-create-budget-dialog'));
               }}
             >
               Create Budget
@@ -304,9 +303,6 @@ export default function BudgetList({ budgets }: BudgetListProps) {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
-
-      {/* Hidden trigger for CreateBudgetDialog */}
-      <button id="create-budget-dialog-trigger" className="hidden" />
     </div>
   );
 }

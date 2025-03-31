@@ -907,6 +907,27 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(500).json({ message: "Failed to fetch budget allocations" });
     }
   });
+  
+  app.get("/api/budgets/:budgetId/performance", requireAuth, async (req, res) => {
+    try {
+      const budgetId = parseInt(req.params.budgetId);
+      const budget = await storage.getBudgetById(budgetId);
+      
+      if (!budget) {
+        return res.status(404).json({ message: "Budget not found" });
+      }
+      
+      if (budget.userId !== req.user.id) {
+        return res.status(403).json({ message: "You don't have permission to access this budget" });
+      }
+      
+      const performance = await storage.getBudgetPerformance(budgetId);
+      res.json(performance);
+    } catch (error) {
+      console.error("Error fetching budget performance:", error);
+      res.status(500).json({ message: "Failed to fetch budget performance" });
+    }
+  });
 
   app.post("/api/budget-allocations", requireAuth, async (req, res) => {
     try {

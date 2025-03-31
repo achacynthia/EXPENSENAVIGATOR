@@ -182,9 +182,6 @@ export default function CreateBudgetDialog({
 
   return (
     <>
-      <DialogTrigger asChild>
-        <button id="create-budget-dialog-trigger" className="hidden" />
-      </DialogTrigger>
       <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
         <DialogContent className="sm:max-w-[600px] max-h-[90vh] overflow-y-auto">
           <DialogHeader>

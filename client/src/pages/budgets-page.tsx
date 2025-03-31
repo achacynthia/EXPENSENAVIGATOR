@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useAuth } from "@/hooks/use-auth";
 import { Budget } from "@/lib/models";
@@ -10,6 +10,19 @@ import CreateBudgetDialog from "@/components/budget/create-budget-dialog";
 export default function BudgetsPage() {
   const { user } = useAuth();
   const [isCreateBudgetOpen, setIsCreateBudgetOpen] = useState(false);
+
+  // Add event listener for opening create budget dialog
+  useEffect(() => {
+    const handleOpenCreateDialog = () => {
+      setIsCreateBudgetOpen(true);
+    };
+
+    window.addEventListener('open-create-budget-dialog', handleOpenCreateDialog);
+    
+    return () => {
+      window.removeEventListener('open-create-budget-dialog', handleOpenCreateDialog);
+    };
+  }, []);
 
   const { data: budgets, isLoading, error } = useQuery<Budget[]>({
     queryKey: ["/api/budgets"],
