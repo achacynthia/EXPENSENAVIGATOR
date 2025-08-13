@@ -34,5 +34,5 @@ export default defineConfig({
     outDir: path.resolve(__dirname, "dist/public"),
     emptyOutDir: true,
   },
-  base: process.env.VITE_BASE_PATH || "/EXPENSENAVIGATOR"
+  base: process.env.VITE_BASE_PATH || "/"
 });
